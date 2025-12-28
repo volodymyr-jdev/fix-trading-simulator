@@ -15,7 +15,7 @@ A trading simulator between a Broker and a Stock Exchange using the [Financial I
 
 If you want to participate on this project, just open an issue and we can talk about!
 
-Both Broker and Exchange systems were built with Quarkus on the back-end and Angular on the front-end. 
+Both Broker and Exchange systems were built with Quarkus on the back-end and Angular on the front-end.
 
 The back-ends communicate each other with QuickFIX/J and each has a schema into the PostgreSQL.
 
@@ -66,16 +66,14 @@ List the messages received and sent.
 
 # Running the project
 
-## With docker-compose
-
 After start, access project at:
 - Broker Front end
-  - http://localhost/
-- Broker Back end swagger: 
+  - http://localhost:8085/
+- Broker Back end swagger:
   - http://localhost:8080/q/swagger-ui/
 - Exchange Front end
-  - http://localhost:90/
-- Exchange Back end swagger: 
+  - http://localhost:8095/
+- Exchange Back end swagger:
   - http://localhost:8090/q/swagger-ui/
 - PostgreSQL:
   - jdbc:postgresql://localhost:5432/postgres
@@ -90,8 +88,39 @@ CONTAINER ID        IMAGE                               COMMAND                 
 1178d4e1c02f        felipewind/broker-front-end:1.0     "/docker-entrypoint.…"   16 minutes ago      Up 16 minutes       0.0.0.0:80->80/tcp       broker-front-end
 2370c47d0a2d        felipewind/broker-back-end:1.0      "/deployments/run-ja…"   16 minutes ago      Up 16 minutes       0.0.0.0:8080->8080/tcp   broker-back-end
 8106b9a48217        felipewind/exchange-back-end:1.0    "/deployments/run-ja…"   16 minutes ago      Up 16 minutes       0.0.0.0:8090->8090/tcp   exchange-back-end
-6b53a07b72ac        postgres                            "docker-entrypoint.s…"   16 minutes ago      Up 16 minutes       0.0.0.0:5432->5432/tcp   fix-trading-simulator_postgresql-qfj_1
+6b53a07b72ac        postgres                            "docker-entrypoint.s…"   16 minutes ago      Up 16 minutes       0.0.0.0:5432->5432/tcp   postgresql-qfj
 ```
+### Standard Mode (JVM)
+
+This mode is suitable for development, debugging, and general use. It compiles and runs Java applications inside a
+standard OpenJDK container. Crucially, by leveraging Multi-stage Docker builds, this allows the images to be compiled
+entirely from source without requiring local installations of Java, Maven, Node.js, or Angular CLI on your machine.
+
+**Files used:** 
+`./run-project.sh` and `docker-compose.yml`.
+
+**Startup Command:**
+```
+$ chmod +x ./run-project.sh 
+$ ./run-project.sh
+```
+
+### Native Image Mode (Instant Startup)
+
+This mode compiles the Quarkus backends into fast, standalone native executables using GraalVM (Mandrel). Native
+executables offer microsecond startup times and a significantly lower memory footprint, making them ideal for production
+or minimal environments. The process leverages Multi-stage Docker builds, allowing the images to be compiled entirely
+from source without requiring local installations of Java, Maven, Node.js, or Angular CLI.
+
+**Files used:**
+`./run-project-native.sh` and `docker-compose-native.yml`.
+
+**Startup Command:**
+```
+$ chmod +x ./run-project-native.sh 
+$ ./run-project-native.sh
+```
+**Prerequisites:** Ensure your Docker environment is allocated sufficient resources (8GB+ RAM recommended for the compilation stage).
 
 ### Using the Docker Hub Images
 
@@ -107,19 +136,11 @@ Docker Hub images:
 - [broker-back-end](https://hub.docker.com/repository/docker/felipewind/broker-back-end)
 - [broker-front-end](https://hub.docker.com/repository/docker/felipewind/broker-front-end)
 
-### Building the Docker images locally
+## Development Mode (Manual Setup)
 
-Inside the root folder of the project, execute:
-```
-$ chmod +x ./run-with-local-build.sh
-$ ./run-with-local-build.sh
-```
-
-After the first build, you can use the `run-after-local-build` script.
-
-
-
-## Without docker-compose 
+> **Note:** This section is intended for **developers** who want to modify the source code and use features like **Live Coding / Hot Reload**.
+>
+> Unlike the Docker method, this mode **REQUIRES** you to install Java 11+, Maven, Node.js, and Angular CLI on your local machine.
 
 The default version of the development back-end projects is using H2 data base (in memory).
 

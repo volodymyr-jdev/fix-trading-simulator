@@ -12,6 +12,12 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.helesto</groupId>
+      <artifactId>native-stub</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.quickfixj</groupId>
       <artifactId>quickfixj-core</artifactId>
     </dependency>

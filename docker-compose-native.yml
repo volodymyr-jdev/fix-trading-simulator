@@ -2,10 +2,10 @@ services:
   # Exchange Backend (FIX Acceptor)
   exchange-back-end:
     container_name: exchange-back-end
-    image: felipewind/exchange-back-end:1.0
+    image: felipewind/exchange-back-end:1.0-native
     build:
       context: .
-      dockerfile: ./exchange-back-end/src/main/docker/Dockerfile.jvm
+      dockerfile: ./exchange-back-end/src/main/docker/Dockerfile.native
     ports:
       - "8090:8090"
     networks:
@@ -13,6 +13,7 @@ services:
     depends_on:
       postgresql-qfj:
         condition: service_healthy
+    mem_limit: 256m
     environment:
       # DB config
       - QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://postgresql-qfj:5432/postgres?currentSchema=exchange
@@ -22,31 +23,31 @@ services:
       - QUARKUS_HTTP_CORS_ORIGINS=/.*/
       # QuickFIX Acceptor settings
       - QUICKFIX=[default],
-          [session],
-          BeginString=FIX.4.4,
-          SenderCompID=EXEC,
-          TargetCompID=BANZAI,
-          ConnectionType=acceptor,
-          StartTime=00:00:00,
-          EndTime=00:00:00,
-          SocketAcceptPort=9880,
-          ScreenLogShowHeartBeats=Y,
-          JdbcStoreMessagesTableName=messages,
-          JdbcStoreSessionsTableName=sessions,
-          JdbcLogHeartBeats=Y,
-          JdbcLogIncomingTable=messages_log_incoming,
-          JdbcLogOutgoingTable=messages_log_outgoing,
-          JdbcLogEventTable=event_log,
-          JdbcSessionIdDefaultPropertyValue=not_null,
-          AllowedRemoteAddresses=127.0.0.1\,172.0.0.2\,172.0.0.3\,broker-back-end
+        [session],
+        BeginString=FIX.4.4,
+        SenderCompID=EXEC,
+        TargetCompID=BANZAI,
+        ConnectionType=acceptor,
+        StartTime=00:00:00,
+        EndTime=00:00:00,
+        SocketAcceptPort=9880,
+        ScreenLogShowHeartBeats=Y,
+        JdbcStoreMessagesTableName=messages,
+        JdbcStoreSessionsTableName=sessions,
+        JdbcLogHeartBeats=Y,
+        JdbcLogIncomingTable=messages_log_incoming,
+        JdbcLogOutgoingTable=messages_log_outgoing,
+        JdbcLogEventTable=event_log,
+        JdbcSessionIdDefaultPropertyValue=not_null,
+        AllowedRemoteAddresses=127.0.0.1\,172.0.0.2\,172.0.0.3\,broker-back-end
 
   # Broker Backend (FIX Initiator)
   broker-back-end:
     container_name: broker-back-end
-    image: felipewind/broker-back-end:1.0
+    image: felipewind/broker-back-end:1.0-native
     build:
       context: .
-      dockerfile: ./broker-back-end/src/main/docker/Dockerfile.jvm
+      dockerfile: ./broker-back-end/src/main/docker/Dockerfile.native
     ports:
       - "8080:8080"
     networks:
@@ -54,6 +55,7 @@ services:
     depends_on:
       postgresql-qfj:
         condition: service_healthy
+    mem_limit: 256m
     environment:
       # DB config
       - QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://postgresql-qfj:5432/postgres?currentSchema=broker
@@ -63,25 +65,25 @@ services:
       - QUARKUS_HTTP_CORS_ORIGINS=/.*/
       # QuickFIX Initiator settings
       - QUICKFIX=[default],
-          [session],
-          BeginString=FIX.4.4,
-          SenderCompID=BANZAI,
-          TargetCompID=EXEC,
-          ConnectionType=initiator,
-          StartTime=00:00:00,
-          EndTime=00:00:00,
-          ReconnectInterval=5,
-          HeartBtInt=30,
-          SocketConnectHost=exchange-back-end,
-          SocketConnectPort=9880,
-          ScreenLogShowHeartBeats=Y,
-          JdbcStoreMessagesTableName=messages,
-          JdbcStoreSessionsTableName=sessions,
-          JdbcLogHeartBeats=Y,
-          JdbcLogIncomingTable=messages_log_incoming,
-          JdbcLogOutgoingTable=messages_log_outgoing,
-          JdbcLogEventTable=event_log,
-          JdbcSessionIdDefaultPropertyValue=not_null
+        [session],
+        BeginString=FIX.4.4,
+        SenderCompID=BANZAI,
+        TargetCompID=EXEC,
+        ConnectionType=initiator,
+        StartTime=00:00:00,
+        EndTime=00:00:00,
+        ReconnectInterval=5,
+        HeartBtInt=30,
+        SocketConnectHost=exchange-back-end,
+        SocketConnectPort=9880,
+        ScreenLogShowHeartBeats=Y,
+        JdbcStoreMessagesTableName=messages,
+        JdbcStoreSessionsTableName=sessions,
+        JdbcLogHeartBeats=Y,
+        JdbcLogIncomingTable=messages_log_incoming,
+        JdbcLogOutgoingTable=messages_log_outgoing,
+        JdbcLogEventTable=event_log,
+        JdbcSessionIdDefaultPropertyValue=not_null
 
   postgresql-qfj:
     container_name: postgresql-qfj
