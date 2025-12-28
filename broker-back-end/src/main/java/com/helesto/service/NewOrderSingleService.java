@@ -2,9 +2,9 @@ package com.helesto.service;
 
 import java.time.LocalDateTime;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import com.helesto.core.Trader;
 import com.helesto.dao.OrderDao;

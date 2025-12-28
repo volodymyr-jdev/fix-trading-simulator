@@ -20,6 +20,8 @@ services:
       - QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://postgresql-qfj:5432/postgres?currentSchema=exchange
       - QUARKUS_DATASOURCE_USERNAME=postgres
       - QUARKUS_DATASOURCE_PASSWORD=postgres
+      - QUARKUS_HTTP_CORS=true
+      - QUARKUS_HTTP_CORS_ORIGINS=/.*/
 
       # QuickFIX Acceptor settings
       - QUICKFIX=[default],
@@ -60,6 +62,8 @@ services:
       - QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://postgresql-qfj:5432/postgres?currentSchema=broker
       - QUARKUS_DATASOURCE_USERNAME=postgres
       - QUARKUS_DATASOURCE_PASSWORD=postgres
+      - QUARKUS_HTTP_CORS=true
+      - QUARKUS_HTTP_CORS_ORIGINS=/.*/
 
       # QuickFIX Initiator settings
       - QUICKFIX=[default],

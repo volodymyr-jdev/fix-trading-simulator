@@ -1,9 +1,9 @@
 package com.helesto.rest;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
 
 import com.helesto.dto.OrderDto;
 import com.helesto.socket.OrderSocket;

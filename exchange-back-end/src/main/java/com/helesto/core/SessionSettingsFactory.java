@@ -3,7 +3,7 @@ package com.helesto.core;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;

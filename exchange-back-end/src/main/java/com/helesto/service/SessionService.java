@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 import com.helesto.core.Exchange;
 import com.helesto.dao.SessionsDao;

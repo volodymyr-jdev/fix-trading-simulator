@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Stage 1: Build
-FROM docker.io/library/eclipse-temurin:11-jdk AS build
+FROM docker.io/library/maven:3.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ COPY broker-back-end/src broker-back-end/src
 RUN ./mvnw package -pl broker-back-end -am -DskipTests
 
 # Stage 2: Runtime
-FROM registry.access.redhat.com/ubi8/openjdk-11:1.14
+FROM docker.io/library/eclipse-temurin:21-jre-alpine
 
 LABEL description="Broker Backend"
 
@@ -35,6 +35,7 @@ COPY --from=build --chown=185 /app/broker-back-end/target/quarkus-app/quarkus/ /
 
 EXPOSE 8080
 
-USER 185
+RUN addgroup -S quarkus && adduser -S quarkus -G quarkus
+USER quarkus
 
-ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTIONS -jar /deployments/quarkus-run.jar" ]
