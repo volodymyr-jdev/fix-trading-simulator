@@ -138,7 +138,7 @@ $ ./run-project-native-distroless.sh
 
 Inside the root folder of the project, execute:
 ```
-$ chmod +x ./run-from-docker-hub.sh
+$chmod +x ./run-from-docker-hub.sh
 $ ./run-from-docker-hub.sh
 ```
 
@@ -162,22 +162,22 @@ docker run -d --name postgres-qfj -p 5432:5432 -e POSTGRES_USER=postgres -e POST
 ```
 
 
-### Enter inside the `exchange-back-end` folder and type:
+### Navigate to the `exchange-back-end` folder and type:
 ```
-$ ./mvnw compile quarkus:dev -Ddebug=5006
+$ ../mvnw compile quarkus:dev -Ddebug=5006
 ```
 
 Access http://localhost:8090/q/swagger-ui/
 
-### Enter inside the `broker-back-end` folder and type:
+### Navigate to the `broker-back-end` folder and type:
 ```
-$ ./mvnw compile quarkus:dev
+$ ../mvnw compile quarkus:dev
 ```
 
 Access http://localhost:8080/q/swagger-ui/
 
 
-### Enter inside the `exchange-front-end` folder and type:
+### Navigate to the `exchange-front-end` folder and type:
 ```
 $ npm install
 $ ng serve
@@ -186,7 +186,7 @@ $ ng serve
 Access http://localhost:4300
 
 
-### Enter inside the `broker-front-end` folder and type:
+### Navigate to the `broker-front-end` folder and type:
 ```
 $ npm install
 $ ng serve
