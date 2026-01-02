@@ -14,7 +14,7 @@ COPY broker-back-end/pom.xml broker-back-end/
 COPY exchange-back-end/pom.xml exchange-back-end/
 COPY native-stub/pom.xml native-stub/
 
-RUN ./mvnw dependency:go-offline -pl broker-back-end -am -B
+RUN ./mvnw dependency:go-offline -pl exchange-back-end -am -B -DexcludeGroupIds=com.helesto
 
 COPY exchange-back-end/src exchange-back-end/src
 COPY native-stub/src native-stub/src
