@@ -94,7 +94,7 @@ public class OrdersRestTestIT {
                 .extract().path(FIELD_CL_ORD_ID);
 
         // Verifies NewOrderSingle (35=D) transmission
-        assertMessageSentToExchange(MsgType.ORDER_SINGLE);
+        assertMessageSentToExchange(MsgType.NEW_ORDER_SINGLE);
 
         assertExecutionReport(clOrdId, OrdStatus.FILLED);
     }
@@ -129,7 +129,7 @@ public class OrdersRestTestIT {
                 .extract().path(FIELD_CL_ORD_ID);
 
         // Clears initial creation message
-        assertMessageSentToExchange(MsgType.ORDER_SINGLE);
+        assertMessageSentToExchange(MsgType.NEW_ORDER_SINGLE);
 
         given()
                 .pathParam(FIELD_CL_ORD_ID, clOrdId)

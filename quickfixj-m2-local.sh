@@ -14,13 +14,7 @@ trap '$CMD rm -f "$CONTAINER" >/dev/null 2>&1; rm -rf "$TEMP_DIR"' EXIT
 
 echo "1. Building Image (Git Clone & Maven Build)"
 
-$CMD build -t "$IMAGE" -f - . <<EOF
-FROM docker.io/library/maven:3.9-eclipse-temurin-21
-WORKDIR /build
-RUN git clone --depth 1 https://github.com/quickfix-j/quickfixj .
-RUN mvn versions:set -DnewVersion=${VERSION} -DprocessAllModules=true
-RUN mvn clean install -DskipTests -Dmaven.javadoc.skip=true -PskipBundlePlugin,minimal-fix-latest
-EOF
+$CMD build -t "$IMAGE" --build-arg VERSION="$VERSION" -f Dockerfile.quickfixj-builder .
 
 echo "2. Extracting artifacts"
 

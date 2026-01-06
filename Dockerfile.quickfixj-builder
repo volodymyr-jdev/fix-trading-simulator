@@ -1,0 +1,6 @@
+FROM docker.io/library/maven:3.9-eclipse-temurin-21
+WORKDIR /build
+RUN git clone --depth 1 https://github.com/quickfix-j/quickfixj .
+ARG VERSION=3.0.0-SNAPSHOT
+RUN mvn versions:set -DnewVersion=${VERSION} -DprocessAllModules=true
+RUN mvn clean install -DskipTests -Dmaven.javadoc.skip=true -PskipBundlePlugin,minimal-fix-latest
