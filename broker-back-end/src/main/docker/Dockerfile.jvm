@@ -12,14 +12,12 @@ RUN chmod +x mvnw
 COPY pom.xml .
 COPY broker-back-end/pom.xml broker-back-end/
 COPY exchange-back-end/pom.xml exchange-back-end/
-COPY native-stub/pom.xml native-stub/
 
 COPY broker-back-end/local-m2 /root/.m2/repository
 
 RUN ./mvnw dependency:go-offline -pl broker-back-end -am -B -DexcludeGroupIds=com.helesto,org.quickfixj
 
 COPY broker-back-end/src broker-back-end/src
-COPY native-stub/src native-stub/src
 
 RUN ./mvnw package -pl broker-back-end -am -DskipTests
 

@@ -11,7 +11,6 @@
   <modules>
     <module>broker-back-end</module>
     <module>exchange-back-end</module>
-    <module>native-stub</module>
   </modules>
 
   <properties>
@@ -28,6 +27,7 @@
     <quarkus-plugin.version>3.30.5</quarkus-plugin.version>
 
     <quickfixj.version>3.0.0-SNAPSHOT</quickfixj.version>
+    <metrics.version>4.2.26</metrics.version>
   </properties>
 
   <dependencyManagement>
@@ -49,8 +49,39 @@
         <artifactId>quickfixj-messages-fix44</artifactId>
         <version>${quickfixj.version}</version>
       </dependency>
+      <dependency>
+        <groupId>io.dropwizard.metrics</groupId>
+        <artifactId>metrics-core</artifactId>
+        <version>${metrics.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.dropwizard.metrics</groupId>
+        <artifactId>metrics-healthchecks</artifactId>
+        <version>${metrics.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+    <!-- We need this dependency to satisfy GraalVM's static analysis during a native build. -->
+    <dependency>
+      <groupId>io.dropwizard.metrics</groupId>
+      <artifactId>metrics-core</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- We need this dependency to satisfy GraalVM's static analysis during a native build. -->
+    <dependency>
+      <groupId>io.dropwizard.metrics</groupId>
+      <artifactId>metrics-healthchecks</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- We need this dependency to satisfy GraalVM's static analysis during a native build. -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-core</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
 
   <build>
     <pluginManagement>
